@@ -1,4 +1,6 @@
 # Database / HCI Project
 Database / HCI Project - 2016
 
-Windows app developed for HCI and DB.
+C# WPF app developed for HCI and DB.
+
+Gene/Protein app.
