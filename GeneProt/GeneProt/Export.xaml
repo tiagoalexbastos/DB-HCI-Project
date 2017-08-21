@@ -1,0 +1,183 @@
+﻿<Page x:Class="GeneProt.Export"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:controls="clr-namespace:MahApps.Metro.Controls;assembly=MahApps.Metro"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+      xmlns:Controls="http://metro.mahapps.com/winfx/xaml/controls"
+      xmlns:local="clr-namespace:GeneProt"
+      mc:Ignorable="d" 
+      d:DesignHeight="300" d:DesignWidth="300"
+      Title="Export">
+
+
+    <Grid>
+        <TabControl Name="tab_control" Margin="10,5,0,0">
+            <TabItem Header="Importar" Name="import_tab">
+                <ScrollViewer Grid.Column="1" VerticalScrollBarVisibility="Auto">
+                    <Grid>
+
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="0.6*" />
+                            <ColumnDefinition Width="1.2*" />
+                        </Grid.ColumnDefinitions>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="auto"/>
+                            <RowDefinition Height="auto"/>
+                            <RowDefinition Height="auto"/>
+                            <RowDefinition Height="auto"/>
+                        </Grid.RowDefinitions>
+                        <StackPanel Grid.Column="0" Margin="25,25,0,0">
+                            <RadioButton Name="Gene_imp" GroupName="tabelas" Margin="0,0,0,10" ToolTip="gene_sequential_id, chromosome_location, GRCh38_hg38_Assembly, GRCh37_hg19_Assembly, symbol, approved_name">
+                                <RadioButton.Content>
+                                    <TextBlock Text="Gene" FontSize="15"/>
+                                </RadioButton.Content>
+                            </RadioButton>
+                            <RadioButton Name="Proteina_imp" GroupName="tabelas" Margin="0,0,0,10" ToolTip="protein_sequential_id, gene_sequential_id, protein_name, uniprot_id, num_of_residues, protein_type, molecular_weight">
+                                <RadioButton.Content>
+                                    <TextBlock Text="Proteína" FontSize="15"/>
+                                </RadioButton.Content>
+                            </RadioButton>
+                            <RadioButton Name="Metabolitos_imp" GroupName="tabelas" Margin="0,0,0,10" ToolTip="metabolite_sequential_id, hmdb_id, common_name, avg_molecular_weight, iupac_name, kingdom, class, status">
+                                <RadioButton.Content>
+                                    <TextBlock Text="Metabolitos" FontSize="15"/>
+                                </RadioButton.Content>
+                            </RadioButton>
+                            <RadioButton Name="Mutacao_imp" GroupName="tabelas" Margin="0,0,0,10" ToolTip="mutation_sequential_id, variant_id, hgvs_ng, hgvs_c, hgvs_g, hgvs_p, start, stop, variant_type, most_severe_clinical_significance, minor_allele_1000G, MAF_1000G, protein_change, variant_allele, molecular_consequences2, transcript_change, condition, gene_sequential_id, protein_sequential_id">
+                                <RadioButton.Content>
+                                    <TextBlock Text="Mutação" FontSize="15"/>
+                                </RadioButton.Content>
+                            </RadioButton>
+                            <RadioButton Name="Expressao_imp" GroupName="tabelas" Margin="0,0,0,10" ToolTip="code_exp, score, molecular_type, result_type, num_samples, type_exp, result_exp, gene_sequential_id, protein_sequential_id, db_name_exp">
+                                <RadioButton.Content>
+                                    <TextBlock Text="Expressão" FontSize="15"/>
+                                </RadioButton.Content>
+                            </RadioButton>
+                            <RadioButton Name="Amostras_imp" GroupName="tabelas" Margin="0,0,0,10" ToolTip="sample_id, study_id, gene_sequential_id, condition_sample, symbol, sex, age, age_unit, ethnic_group, develop_stage, condition, mutation_sequential_id, eQTL_pvalue, eQTL_effect_size, exp_code_sample">
+                                <RadioButton.Content>
+                                    <TextBlock Text="Amostras" FontSize="15"/>
+                                </RadioButton.Content>
+                            </RadioButton>
+                            <RadioButton Name="PPI_imp" GroupName="tabelas" Margin="0,0,0,10" ToolTip="gene_sequential_id, chromosome_location, GRCh38_hg38_Assembly, GRCh37_hg19_Assembly, symbol, approved_name">
+                                <RadioButton.Content>
+                                    <TextBlock Text="PPI" FontSize="15"/>
+                                </RadioButton.Content>
+                            </RadioButton>
+                            <RadioButton Name="PCI_imp" GroupName="tabelas" Margin="0,0,0,10" ToolTip="gene_sequential_id, chromosome_location, GRCh38_hg38_Assembly, GRCh37_hg19_Assembly, symbol, approved_name">
+                                <RadioButton.Content>
+                                    <TextBlock Text="PCI" FontSize="15"/>
+                                </RadioButton.Content>
+                            </RadioButton>
+                        </StackPanel>
+
+                        <ToggleButton x:Name = "toggle_header" Grid.Row="1" Content = "Cabeçalho" Margin="30,12,0,0" 
+         Width = "80" HorizontalAlignment = "Left" />
+
+                        <StackPanel Grid.Row="2" Orientation="Horizontal" Margin="30,12,0,0">
+                            <TextBlock Margin="0,5,7,5" FontSize="20">
+                            Separador:
+                            </TextBlock>
+                            <RadioButton Name="Separator_tab" GroupName="separator" Margin="0,0,15,0">
+                                <RadioButton.Content>
+                                    <TextBlock Text="tab" FontSize="15"/>
+                                </RadioButton.Content>
+                            </RadioButton>
+                            <RadioButton Name="Separator_space" GroupName="separator" Margin="0,0,15,0">
+                                <RadioButton.Content>
+                                    <TextBlock Text="Espaço" FontSize="15"/>
+                                </RadioButton.Content>
+                            </RadioButton>
+                            <RadioButton Name="Separator_virgula" GroupName="separator" Margin="0,0,15,0">
+                                <RadioButton.Content>
+                                    <TextBlock Text="," FontSize="15"/>
+                                </RadioButton.Content>
+                            </RadioButton>
+                            <RadioButton Name="Separator_pvirg" GroupName="separator" Margin="0,0,15,0">
+                                <RadioButton.Content>
+                                    <TextBlock Text=";" FontSize="15"/>
+                                </RadioButton.Content>
+                            </RadioButton>
+                            <RadioButton Name="Separator_bar" GroupName="separator" Margin="0,0,15,0">
+                                <RadioButton.Content>
+                                    <TextBlock Text="|" FontSize="15"/>
+                                </RadioButton.Content>
+                            </RadioButton>
+                        </StackPanel>
+
+                        <Button Click="Import_Table" HorizontalAlignment="Left" Width="75" Margin="30,12,0,5" Grid.Row="3" Style="{DynamicResource SquareButtonStyle}" >
+                            <TextBlock Text="Importar"/>
+                        </Button>
+
+
+
+                    </Grid>
+                </ScrollViewer>
+
+            </TabItem>
+            <TabItem Header="Exportar" Name="export_tab">
+                <Grid>
+
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="0.6*" />
+                        <ColumnDefinition Width="1.2*" />
+                    </Grid.ColumnDefinitions>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="auto"/>
+                        <RowDefinition Height="auto"/>
+                    </Grid.RowDefinitions>
+                    <StackPanel Grid.Column="0" Margin="25,25,0,0">
+                        <RadioButton Name="Gene" GroupName="tabelas" Margin="0,0,0,10">
+                            <RadioButton.Content>
+                                <TextBlock Text="Gene" FontSize="15"/>
+                            </RadioButton.Content>
+                        </RadioButton>
+                        <RadioButton Name="Proteina" GroupName="tabelas" Margin="0,0,0,10">
+                            <RadioButton.Content>
+                                <TextBlock Text="Proteína" FontSize="15"/>
+                            </RadioButton.Content>
+                        </RadioButton>
+                        <RadioButton Name="Metabolitos" GroupName="tabelas" Margin="0,0,0,10">
+                            <RadioButton.Content>
+                                <TextBlock Text="Metabolitos" FontSize="15"/>
+                            </RadioButton.Content>
+                        </RadioButton>
+                        <RadioButton Name="Mutacao" GroupName="tabelas" Margin="0,0,0,10">
+                            <RadioButton.Content>
+                                <TextBlock Text="Mutação" FontSize="15"/>
+                            </RadioButton.Content>
+                        </RadioButton>
+                        <RadioButton Name="Expressao" GroupName="tabelas" Margin="0,0,0,10">
+                            <RadioButton.Content>
+                                <TextBlock Text="Expressão" FontSize="15"/>
+                            </RadioButton.Content>
+                        </RadioButton>
+                        <RadioButton Name="Amostras" GroupName="tabelas" Margin="0,0,0,10">
+                            <RadioButton.Content>
+                                <TextBlock Text="Amostras" FontSize="15"/>
+                            </RadioButton.Content>
+                        </RadioButton>
+                        <RadioButton Name="PPI" GroupName="tabelas" Margin="0,0,0,10">
+                            <RadioButton.Content>
+                                <TextBlock Text="PPI" FontSize="15"/>
+                            </RadioButton.Content>
+                        </RadioButton>
+                        <RadioButton Name="PCI" GroupName="tabelas" Margin="0,0,0,10">
+                            <RadioButton.Content>
+                                <TextBlock Text="PCI" FontSize="15"/>
+                            </RadioButton.Content>
+                        </RadioButton>
+                    </StackPanel>
+
+
+                    <Button Click="Export_Table" HorizontalAlignment="Left" Width="75" Margin="30,5,0,5" Grid.Row="1" Style="{DynamicResource SquareButtonStyle}" >
+                        <TextBlock Text="Exportar"/>
+                    </Button>
+
+
+
+                </Grid>
+            </TabItem>
+        </TabControl>
+    </Grid>
+
+</Page>

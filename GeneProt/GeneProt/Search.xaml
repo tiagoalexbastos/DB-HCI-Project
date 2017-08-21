@@ -1,0 +1,674 @@
+﻿<Page x:Class="GeneProt.Search"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:controls="clr-namespace:MahApps.Metro.Controls;assembly=MahApps.Metro"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+      xmlns:Controls="http://metro.mahapps.com/winfx/xaml/controls"
+      xmlns:local="clr-namespace:GeneProt"
+      mc:Ignorable="d" 
+      d:DesignHeight="300" d:DesignWidth="300"
+      Title="Search">
+
+    <Page.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="/Resources/Icons.xaml" />
+            </ResourceDictionary.MergedDictionaries>
+        </ResourceDictionary>
+    </Page.Resources>
+
+    <Grid>
+        <TabControl Name="tab_control">
+            <TabItem Header="Gene" Name="Gene_tab" Selector.Selected="Gene_Clear">
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="1*" />
+                        <ColumnDefinition Width="0.6*" />
+                    </Grid.ColumnDefinitions>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="*" />
+                    </Grid.RowDefinitions>
+                    <DataGrid Name="GeneGrid" IsReadOnly="True" SelectionChanged="GeneGrid_SelectionChanged">
+                    </DataGrid>
+                    <ScrollViewer Grid.Column="1" VerticalScrollBarVisibility="Auto">
+                        <StackPanel>
+                            <Grid Grid.Column="1" Margin="10,0,0,0">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="Auto" />
+                                    <ColumnDefinition Width="*" />
+                                </Grid.ColumnDefinitions>
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="Auto" />
+                                    <RowDefinition Height="Auto" />
+                                    <RowDefinition Height="Auto" />
+                                    <RowDefinition Height="Auto" />
+                                    <RowDefinition Height="Auto" />
+                                    <RowDefinition Height="Auto" />
+                                    <RowDefinition Height="Auto" />
+                                    <RowDefinition Height="Auto" />
+                                    <RowDefinition Height="Auto" />
+                                    <RowDefinition Height="Auto" />
+                                    <RowDefinition Height="*" />
+                                </Grid.RowDefinitions>
+                                <Label Grid.Row="1">ID:</Label>
+                                <TextBox Grid.Column="1" Grid.Row="1" Name="id_tb" Margin="0,0,0,10"  Controls:TextBoxHelper.ClearTextButton="True"/>
+                                <Label Grid.Row="2">Chromosome Location:</Label>
+                                <TextBox Grid.Row="2" Grid.Column="1" Name="cromo_loc_tb" Margin="0,0,0,10" Controls:TextBoxHelper.ClearTextButton="True" />
+                                <Label Grid.Row="3">GRCh38_hg38_Assembly:</Label>
+                                <TextBox Grid.Row="3" Grid.Column="1" Name="ass_38_tb" Margin="0,0,0,10" Controls:TextBoxHelper.ClearTextButton="True" />
+                                <Label Grid.Row="4">GRCh37_hg19_Assembly:</Label>
+                                <TextBox Grid.Row="4" Grid.Column="1" Name="ass_19_tb" Margin="0,0,0,10" Controls:TextBoxHelper.ClearTextButton="True" />
+                                <Label Grid.Row="5">Symbol:</Label>
+                                <TextBox Grid.Row="5" Grid.Column="1" Name="symbol_tb" Margin="0,0,0,10"  Controls:TextBoxHelper.ClearTextButton="True"/>
+                                <Label Grid.Row="6">Approved Name:</Label>
+                                <TextBox Grid.Row="6" Grid.Column="1" Name="app_name_tb" Margin="0,0,0,10"  Controls:TextBoxHelper.ClearTextButton="True"/>
+                                <Grid Grid.Row="7">
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="Auto" />
+                                        <ColumnDefinition Width="Auto" />
+                                        <ColumnDefinition Width="Auto" />
+                                        <ColumnDefinition Width="Auto" />
+                                        <ColumnDefinition Width="*" />
+                                    </Grid.ColumnDefinitions>
+                                    <Button Grid.Column="0" Content="Atualizar" Style="{StaticResource SquareButtonStyle}" HorizontalAlignment="Left" Margin="0,10,5,0" VerticalAlignment="Top" Click="Gene_Update" />
+                                    <Button Grid.Column="1" Content="Novo" Style="{DynamicResource AccentedSquareButtonStyle}" HorizontalAlignment="Left" Margin="0,10,5,0" VerticalAlignment="Top" Click="Gene_New"/>
+                                    <Button Grid.Column="2" Content="Apagar" Style="{DynamicResource SquareButtonStyle}" HorizontalAlignment="Left" Margin="0,10,5,0" VerticalAlignment="Top" Click="Gene_Delete"/>
+                                    <Button Grid.Column="3" Content="Limpar" Style="{DynamicResource SquareButtonStyle}" HorizontalAlignment="Left" Margin="0,10,5,0" VerticalAlignment="Top"  Click="Gene_Clear"/>
+                                    <Button Grid.Column="4" Content="Pesquisar" Style="{DynamicResource SquareButtonStyle}" HorizontalAlignment="Left" Margin="0,10,5,0" VerticalAlignment="Top"  Click="Gene_Search"/>
+                                </Grid>
+                                <Label Grid.Row="8" Grid.Column="0" Margin="0,12,0,0">Possible Relations:</Label>
+                                <ComboBox Name="gene_rel" Grid.Row="8" Grid.Column="1" HorizontalAlignment="Center" Margin="0,10,5,0" VerticalAlignment="Top" Loaded="ComboBox_Loaded" SelectionChanged="ComboBox_SelectionChanged"/>
+                                <Grid Grid.Row="9">
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="Auto" />
+                                        <ColumnDefinition Width="Auto" />
+                                        <ColumnDefinition Width="*" />
+                                    </Grid.ColumnDefinitions>
+                                    <Button  Grid.Column="0" Content="Get Relation" Style="{DynamicResource SquareButtonStyle}" HorizontalAlignment="Center" Margin="0,10,5,0" VerticalAlignment="Top"  Click="Gene_GetRel"/>
+                                    <Button  Grid.Column="1" Content="Normal View" Style="{DynamicResource SquareButtonStyle}" HorizontalAlignment="Center" Margin="0,10,5,0" VerticalAlignment="Top"  Click="Gene_reset"/>
+                                </Grid>
+                            </Grid>
+                        </StackPanel>
+                    </ScrollViewer>
+                 </Grid>
+            </TabItem>
+            <TabItem Header="Gene Mapping" Selector.Selected="GeneM_Clear">
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="1*" />
+                        <ColumnDefinition Width="0.6*" />
+                    </Grid.ColumnDefinitions>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="*" />
+                    </Grid.RowDefinitions>
+                    <DataGrid Name="GeneMappGrid" IsReadOnly="True" SelectionChanged="GeneMappGrid_SelectionChanged">
+                    </DataGrid>
+                    <ScrollViewer Grid.Column="1" VerticalScrollBarVisibility="Auto">
+                        <StackPanel>
+                            <Grid Grid.Column="1" Margin="10,0,0,0">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="Auto" />
+                                    <ColumnDefinition Width="*" />
+                                </Grid.ColumnDefinitions>
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="Auto" />
+                                    <RowDefinition Height="Auto" />
+                                    <RowDefinition Height="Auto" />
+                                    <RowDefinition Height="Auto" />
+                                    <RowDefinition Height="Auto" />
+                                    <RowDefinition Height="Auto" />
+                                    <RowDefinition Height="Auto" />
+                                    <RowDefinition Height="*" />
+                                </Grid.RowDefinitions>
+                                <Label Grid.Row="1">ID:</Label>
+                                <TextBox Grid.Column="1" Grid.Row="1" Name="id_map_tb" Margin="0,0,0,10"  Controls:TextBoxHelper.ClearTextButton="True"/>
+                                <Label Grid.Row="2">DB:</Label>
+                                <TextBox Grid.Row="2" Grid.Column="1" Name="db_map_tb" Margin="0,0,0,10" Controls:TextBoxHelper.ClearTextButton="True" />
+                                <Label Grid.Row="3">DB_ID:</Label>
+                                <TextBox Grid.Row="3" Grid.Column="1" Name="db_id_map_tb" Margin="0,0,0,10" Controls:TextBoxHelper.ClearTextButton="True" />
+                                <Label Grid.Row="4">URL:</Label>
+                                <TextBox Grid.Row="4" Grid.Column="1" Name="db_url_map" Margin="0,0,0,10" Controls:TextBoxHelper.ClearTextButton="True" />
+                                <Grid Grid.Row="5">
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="Auto" />
+                                        <ColumnDefinition Width="Auto" />
+                                        <ColumnDefinition Width="Auto" />
+                                        <ColumnDefinition Width="Auto" />
+                                        <ColumnDefinition Width="Auto" />
+                                        <ColumnDefinition Width="*" />
+                                    </Grid.ColumnDefinitions>
+                                    <Grid.RowDefinitions>
+                                        <RowDefinition Height="*" />
+                                    </Grid.RowDefinitions>
+                                    <Button Grid.Row="0" Grid.Column="0" Content="Atualizar" Style="{StaticResource SquareButtonStyle}" HorizontalAlignment="Left" Margin="0,10,5,0" VerticalAlignment="Top" Click="GeneM_Update" />
+                                    <Button Grid.Row="0" Grid.Column="1" Content="Novo" Style="{DynamicResource AccentedSquareButtonStyle}" HorizontalAlignment="Left" Margin="0,10,5,0" VerticalAlignment="Top" Click="GeneM_New"/>
+                                    <Button Grid.Row="0" Grid.Column="2" Content="Apagar" Style="{DynamicResource SquareButtonStyle}" HorizontalAlignment="Left" Margin="0,10,5,0" VerticalAlignment="Top" Click="GeneM_Delete"/>
+                                    <Button Grid.Row="0" Grid.Column="3" Content="Limpar" Style="{DynamicResource SquareButtonStyle}" HorizontalAlignment="Left" Margin="0,10,5,0" VerticalAlignment="Top"  Click="GeneM_Clear"/>
+                                    <Button Grid.Row="0" Grid.Column="4" Content="Pesquisar" Style="{DynamicResource SquareButtonStyle}" HorizontalAlignment="Left" Margin="0,10,5,0" VerticalAlignment="Top" Click="GeneMapping_Search"/>
+                                    <Button Grid.Row="0" Grid.Column="5" Content="Browser" Style="{DynamicResource SquareButtonStyle}" HorizontalAlignment="Left" Margin="0,10,5,0" VerticalAlignment="Top" Click="GeneMapping_Url"/>
+                                </Grid>
+                                <Label Grid.Row="6" Grid.Column="0" Margin="0,12,0,0">Possible Relations:</Label>
+                                <ComboBox Name="geneMapping_rel" Grid.Row="5" Grid.Column="1" HorizontalAlignment="Center" Margin="0,10,0,0" VerticalAlignment="Top" Loaded="ComboBoxMapping_Loaded" SelectionChanged="ComboBoxMapping_SelectionChanged"/>
+                                <Grid Grid.Row="7">
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="Auto" />
+                                        <ColumnDefinition Width="Auto" />
+                                        <ColumnDefinition Width="*" />
+                                    </Grid.ColumnDefinitions>
+                                    <Button  Grid.Column="0" Content="Get Relation" Style="{DynamicResource SquareButtonStyle}" HorizontalAlignment="Center" Margin="0,10,5,0" VerticalAlignment="Top"  />
+                                    <Button  Grid.Column="1" Content="Normal View" Style="{DynamicResource SquareButtonStyle}" HorizontalAlignment="Center" Margin="0,10,5,0" VerticalAlignment="Top" Click="GeneM_reset"/>
+                                </Grid>
+                            </Grid>
+                        </StackPanel>
+                    </ScrollViewer>
+                </Grid>
+            </TabItem>
+            <TabItem Header="Protein" Name="tab_prot" Selector.Selected="Protein_Clear">
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="1*" />
+                        <ColumnDefinition Width="0.6*" />
+                    </Grid.ColumnDefinitions>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="*" />
+                    </Grid.RowDefinitions>
+                    <DataGrid Name="ProteinGrid" IsReadOnly="True" SelectionChanged="ProteinGrid_SelectionChanged">
+                    </DataGrid>
+                    <ScrollViewer Grid.Column="1" VerticalScrollBarVisibility="Auto">
+                        <StackPanel>
+                            <Grid Grid.Column="1" Margin="10,0,0,0">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="Auto" />
+                                    <ColumnDefinition Width="*" />
+                                </Grid.ColumnDefinitions>
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="Auto" />
+                                    <RowDefinition Height="Auto" />
+                                    <RowDefinition Height="Auto" />
+                                    <RowDefinition Height="Auto" />
+                                    <RowDefinition Height="Auto" />
+                                    <RowDefinition Height="Auto" />
+                                    <RowDefinition Height="Auto" />
+                                    <RowDefinition Height="Auto" />
+                                    <RowDefinition Height="Auto" />
+                                    <RowDefinition Height="Auto" />
+                                    <RowDefinition Height="Auto" />
+                                    <RowDefinition Height="*" />
+                                </Grid.RowDefinitions>
+                                <Label Grid.Row="1">Protein Seq ID:</Label>
+                                <TextBox Grid.Column="1" Grid.Row="1" Name="protein_sq_id_tb" Margin="0,0,0,10"  Controls:TextBoxHelper.ClearTextButton="True"/>
+                                <Label Grid.Row="2">Gene Sequential ID:</Label>
+                                <TextBox Grid.Row="2" Grid.Column="1" Name="gene_sq_id_tb" Margin="0,0,0,10" Controls:TextBoxHelper.ClearTextButton="True" />
+                                <Label Grid.Row="3">Uniprot ID:</Label>
+                                <TextBox Grid.Row="3" Grid.Column="1" Name="uniprot_id_tb" Margin="0,0,0,10" Controls:TextBoxHelper.ClearTextButton="True" />
+                                <Label Grid.Row="4">Enzyme ID:</Label>
+                                <TextBox Grid.Row="4" Grid.Column="1" Name="enzyme_id_tb" Margin="0,0,0,10" Controls:TextBoxHelper.ClearTextButton="True" />
+                                <Label Grid.Row="5">Num of Residues:</Label>
+                                <TextBox Grid.Row="5" Grid.Column="1" Name="num_of_residues_tb" Margin="0,0,0,10" Controls:TextBoxHelper.ClearTextButton="True" />
+                                <Label Grid.Row="6">Protein Type:</Label>
+                                <TextBox Grid.Row="6" Grid.Column="1" Name="protein_type_tb" Margin="0,0,0,10" Controls:TextBoxHelper.ClearTextButton="True" />
+                                <Label Grid.Row="7">Molecular Weight:</Label>
+                                <TextBox Grid.Row="7" Grid.Column="1" Name="molecular_weight_tb" Margin="0,0,0,10" Controls:TextBoxHelper.ClearTextButton="True" />
+                                <Grid Grid.Row="8">
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="Auto" />
+                                        <ColumnDefinition Width="Auto" />
+                                        <ColumnDefinition Width="Auto" />
+                                        <ColumnDefinition Width="*" />
+                                    </Grid.ColumnDefinitions>
+                                    <Grid.RowDefinitions>
+                                        <RowDefinition Height="*" />
+                                    </Grid.RowDefinitions>
+                                    <Button Grid.Row="0" Grid.Column="0" Content="Atualizar" Style="{StaticResource SquareButtonStyle}" HorizontalAlignment="Left" Margin="0,10,5,0" VerticalAlignment="Top" Click="Protein_Update"/>
+                                    <Button Grid.Row="0" Grid.Column="1" Content="Novo" Style="{DynamicResource AccentedSquareButtonStyle}" HorizontalAlignment="Left" Margin="0,10,5,0" VerticalAlignment="Top" Click="Protein_New"/>
+                                    <Button Grid.Row="0" Grid.Column="2" Content="Apagar" Style="{DynamicResource SquareButtonStyle}" HorizontalAlignment="Left" Margin="0,10,5,0" VerticalAlignment="Top" Click="Protein_Delete"/>
+                                    <Button Grid.Row="0" Grid.Column="3" Content="Limpar" Style="{DynamicResource SquareButtonStyle}" HorizontalAlignment="Left" Margin="0,10,0,0" VerticalAlignment="Top" Click="Protein_Clear"/>
+                                    <Button Grid.Column="4" Content="Pesquisar" Style="{DynamicResource SquareButtonStyle}" HorizontalAlignment="Left" Margin="0,10,5,0" VerticalAlignment="Top"  Click="Prot_Search"/>
+                                </Grid>
+                                <Label Grid.Row="9" Grid.Column="0" Margin="0,12,0,0">Possible Relations:</Label>
+                                <ComboBox Name="prot_rel" Grid.Row="9" Grid.Column="1" HorizontalAlignment="Center" Margin="0,10,0,0" VerticalAlignment="Top" Loaded="ComboBoxProtein_Loaded" SelectionChanged="ComboBoxProtein_SelectionChanged"/>
+                                <Grid Grid.Row="10">
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="Auto" />
+                                        <ColumnDefinition Width="Auto" />
+                                        <ColumnDefinition Width="*" />
+                                    </Grid.ColumnDefinitions>
+                                    <Button  Grid.Column="0" Content="Get Relation" Style="{DynamicResource SquareButtonStyle}" HorizontalAlignment="Center" Margin="0,10,5,0" VerticalAlignment="Top" Click="Protein_Rel" />
+                                    <Button  Grid.Column="1" Content="Normal View" Style="{DynamicResource SquareButtonStyle}" HorizontalAlignment="Center" Margin="0,10,5,0" VerticalAlignment="Top"  Click="Protein_reset"/>
+                                </Grid>
+                            </Grid>
+                        </StackPanel>
+                    </ScrollViewer>
+                </Grid>
+            </TabItem>
+            <TabItem Header="Mutation" Name="tab_mut" Selector.Selected="Mutation_Clear">
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="1*" />
+                        <ColumnDefinition Width="0.6*" />
+                    </Grid.ColumnDefinitions>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="*" />
+                    </Grid.RowDefinitions>
+                    <DataGrid Name="MutationGrid" IsReadOnly="True" SelectionChanged="MutationGrid_SelectionChanged">
+                    </DataGrid>
+                    <ScrollViewer Grid.Column="1" VerticalScrollBarVisibility="Auto">
+                        <StackPanel>
+                            <Grid Grid.Column="1" Margin="10,0,0,0">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="Auto" />
+                                    <ColumnDefinition Width="*" />
+                                </Grid.ColumnDefinitions>
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="Auto" />
+                                    <RowDefinition Height="Auto" />
+                                    <RowDefinition Height="Auto" />
+                                    <RowDefinition Height="Auto" />
+                                    <RowDefinition Height="Auto" />
+                                    <RowDefinition Height="Auto" />
+                                    <RowDefinition Height="Auto" />
+                                    <RowDefinition Height="Auto" />
+                                    <RowDefinition Height="Auto" />
+                                    <RowDefinition Height="Auto" />
+                                    <RowDefinition Height="Auto" />
+                                    <RowDefinition Height="Auto" />
+                                    <RowDefinition Height="Auto" />
+                                    <RowDefinition Height="Auto" />
+                                    <RowDefinition Height="Auto" />
+                                    <RowDefinition Height="Auto" />
+                                    <RowDefinition Height="Auto" />
+                                    <RowDefinition Height="Auto" />
+                                    <RowDefinition Height="Auto" />
+                                    <RowDefinition Height="Auto" />
+                                    <RowDefinition Height="Auto" />
+                                    <RowDefinition Height="Auto" />
+                                    <RowDefinition Height="Auto" />
+                                    <RowDefinition Height="*" />
+                                </Grid.RowDefinitions>
+                                <Label Grid.Row="1">Mutation Seq ID:</Label>
+                                <TextBox Grid.Column="1" Grid.Row="1" Name="mutation_sequential_id_tb" Margin="0,0,0,10"  Controls:TextBoxHelper.ClearTextButton="True"/>
+                                <Label Grid.Row="2">Variant ID:</Label>
+                                <TextBox Grid.Row="2" Grid.Column="1" Name="variant_id_tb" Margin="0,0,0,10" Controls:TextBoxHelper.ClearTextButton="True" />
+                                <Label Grid.Row="3">hgvs_ng:</Label>
+                                <TextBox Grid.Row="3" Grid.Column="1" Name="hgvs_ng_tb" Margin="0,0,0,10" Controls:TextBoxHelper.ClearTextButton="True" />
+                                <Label Grid.Row="4">hgvs_c:</Label>
+                                <TextBox Grid.Row="4" Grid.Column="1" Name="hgvs_c_tb" Margin="0,0,0,10" Controls:TextBoxHelper.ClearTextButton="True" />
+                                <Label Grid.Row="5">hgvs_g:</Label>
+                                <TextBox Grid.Row="5" Grid.Column="1" Name="hgvs_g_tb" Margin="0,0,0,10" Controls:TextBoxHelper.ClearTextButton="True" />
+                                <Label Grid.Row="6">hgvs_p:</Label>
+                                <TextBox Grid.Row="6" Grid.Column="1" Name="hgvs_p_tb" Margin="0,0,0,10" Controls:TextBoxHelper.ClearTextButton="True" />
+                                <Label Grid.Row="7">Start:</Label>
+                                <TextBox Grid.Row="7" Grid.Column="1" Name="start_tb" Margin="0,0,0,10" Controls:TextBoxHelper.ClearTextButton="True" />
+                                <Label Grid.Row="8">Stop:</Label>
+                                <TextBox Grid.Row="8" Grid.Column="1" Name="stop_tb" Margin="0,0,0,10" Controls:TextBoxHelper.ClearTextButton="True" />
+                                <Label Grid.Row="9">Variant Type:</Label>
+                                <TextBox Grid.Row="9" Grid.Column="1" Name="variant_type_tb" Margin="0,0,0,10" Controls:TextBoxHelper.ClearTextButton="True" />
+                                <Label Grid.Row="10">Most Severe Clinical Significance:</Label>
+                                <TextBox Grid.Row="10" Grid.Column="1" Name="most_severe_clinical_significance_tb" Margin="0,0,0,10" Controls:TextBoxHelper.ClearTextButton="True" />
+                                <Label Grid.Row="11">Minor Allele 1000G:</Label>
+                                <TextBox Grid.Row="11" Grid.Column="1" Name="minor_allele_1000G_tb" Margin="0,0,0,10" Controls:TextBoxHelper.ClearTextButton="True" />
+                                <Label Grid.Row="12">MAF_1000G:</Label>
+                                <TextBox Grid.Row="12" Grid.Column="1" Name="MAF_1000G_tb" Margin="0,0,0,10" Controls:TextBoxHelper.ClearTextButton="True" />
+                                <Label Grid.Row="13">Protein Change:</Label>
+                                <TextBox Grid.Row="13" Grid.Column="1" Name="protein_change_tb" Margin="0,0,0,10" Controls:TextBoxHelper.ClearTextButton="True" />
+                                <Label Grid.Row="14">Variant Allele:</Label>
+                                <TextBox Grid.Row="14" Grid.Column="1" Name="variant_allele_tb" Margin="0,0,0,10" Controls:TextBoxHelper.ClearTextButton="True" />
+                                <Label Grid.Row="15">Molecular Consequences2:</Label>
+                                <TextBox Grid.Row="15" Grid.Column="1" Name="molecular_consequences2_tb" Margin="0,0,0,10" Controls:TextBoxHelper.ClearTextButton="True" />
+                                <Label Grid.Row="16">Transcript Change:</Label>
+                                <TextBox Grid.Row="16" Grid.Column="1" Name="transcript_change_tb" Margin="0,0,0,10" Controls:TextBoxHelper.ClearTextButton="True" />
+                                <Label Grid.Row="17">Condition:</Label>
+                                <TextBox Grid.Row="17" Grid.Column="1" Name="condition_tb" Margin="0,0,0,10" Controls:TextBoxHelper.ClearTextButton="True" />
+                                <Label Grid.Row="18">Gene ID:</Label>
+                                <TextBox Grid.Row="18" Grid.Column="1" Name="gene_sequential_id_tb" Margin="0,0,0,10" Controls:TextBoxHelper.ClearTextButton="True" />
+                                <Label Grid.Row="19">UnirProt id:</Label>
+                                <TextBox Grid.Row="19" Grid.Column="1" Name="uniprprotein_sequential_idot_mut_tb" Margin="0,0,0,10" Controls:TextBoxHelper.ClearTextButton="True" />
+                                <Grid Grid.Row="20">
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="Auto" />
+                                        <ColumnDefinition Width="Auto" />
+                                        <ColumnDefinition Width="Auto" />
+                                        <ColumnDefinition Width="*" />
+                                    </Grid.ColumnDefinitions>
+                                    <Grid.RowDefinitions>
+                                        <RowDefinition Height="*" />
+                                    </Grid.RowDefinitions>
+                                    <Button Grid.Row="0" Grid.Column="0" Content="Atualizar" Style="{StaticResource SquareButtonStyle}" HorizontalAlignment="Left" Margin="0,10,5,0" VerticalAlignment="Top" Click="Mutation_Update"/>
+                                    <Button Grid.Row="0" Grid.Column="1" Content="Novo" Style="{DynamicResource AccentedSquareButtonStyle}" HorizontalAlignment="Left" Margin="0,10,5,0" VerticalAlignment="Top" Click="Mutation_New"/>
+                                    <Button Grid.Row="0" Grid.Column="2" Content="Apagar" Style="{DynamicResource SquareButtonStyle}" HorizontalAlignment="Left" Margin="0,10,5,0" VerticalAlignment="Top" Click="Mutation_Delete"/>
+                                    <Button Grid.Row="0" Grid.Column="3" Content="Limpar" Style="{DynamicResource SquareButtonStyle}" HorizontalAlignment="Left" Margin="0,10,0,0" VerticalAlignment="Top" Click="Mutation_Clear"/>
+                                    <Button Grid.Column="4" Content="Pesquisar" Style="{DynamicResource SquareButtonStyle}" HorizontalAlignment="Left" Margin="0,10,5,0" VerticalAlignment="Top" Click="Mut_Search"/>
+                                </Grid>
+                                <Label Grid.Row="21" Grid.Column="0" Margin="0,12,0,0">Possible Relations:</Label>
+                                <ComboBox Name="mutation_rel" Grid.Row="21" Grid.Column="1" HorizontalAlignment="Center" Margin="0,10,0,0" VerticalAlignment="Top" Loaded="ComboBoxMutation_Loaded" SelectionChanged="ComboBoxMutation_SelectionChanged"/>
+                                <Grid Grid.Row="22">
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="Auto" />
+                                        <ColumnDefinition Width="Auto" />
+                                        <ColumnDefinition Width="*" />
+                                    </Grid.ColumnDefinitions>
+                                    <Button  Grid.Column="0" Content="Get Relation" Style="{DynamicResource SquareButtonStyle}" HorizontalAlignment="Center" Margin="0,10,5,0" VerticalAlignment="Top" Click="Mutation_Rel"/>
+                                    <Button  Grid.Column="1" Content="Normal View" Style="{DynamicResource SquareButtonStyle}" HorizontalAlignment="Center" Margin="0,10,5,0" VerticalAlignment="Top" Click="Mutation_reset"/>
+                                </Grid>
+                            </Grid>
+                        </StackPanel>
+                    </ScrollViewer>
+                </Grid>
+            </TabItem>
+            <TabItem Header="Metabolites" Name="tab_metab" Selector.Selected="Metabolites_Clear">
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="1*" />
+                        <ColumnDefinition Width="0.6*" />
+                    </Grid.ColumnDefinitions>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="*" />
+                    </Grid.RowDefinitions>
+                    <DataGrid Name="MetabolitesGrid" IsReadOnly="True" SelectionChanged="MetabolitesGrid_SelectionChanged">
+                    </DataGrid>
+                    <ScrollViewer Grid.Column="1" VerticalScrollBarVisibility="Auto">
+                        <Grid Grid.Column="1" Margin="10,0,0,0">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="Auto" />
+                                <ColumnDefinition Width="*" />
+                            </Grid.ColumnDefinitions>
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="Auto" />
+                                <RowDefinition Height="Auto" />
+                                <RowDefinition Height="Auto" />
+                                <RowDefinition Height="Auto" />
+                                <RowDefinition Height="Auto" />
+                                <RowDefinition Height="Auto" />
+                                <RowDefinition Height="Auto" />
+                                <RowDefinition Height="Auto" />
+                                <RowDefinition Height="Auto" />
+                                <RowDefinition Height="Auto" />
+                                <RowDefinition Height="Auto" />
+                                <RowDefinition Height="*" />
+                            </Grid.RowDefinitions>
+                            <Label Grid.Row="1">Metabolite Seq ID:</Label>
+                            <TextBox Grid.Column="1" Grid.Row="1" Name="metabolite_sequential_id_tb" Margin="0,0,0,10"  Controls:TextBoxHelper.ClearTextButton="True"/>
+                            <Label Grid.Row="2">HMDB ID:</Label>
+                            <TextBox Grid.Row="2" Grid.Column="1" Name="hmdb_id_tb" Margin="0,0,0,10" Controls:TextBoxHelper.ClearTextButton="True" />
+                            <Label Grid.Row="3">Common Name:</Label>
+                            <TextBox Grid.Row="3" Grid.Column="1" Name="common_name_tb" Margin="0,0,0,10" Controls:TextBoxHelper.ClearTextButton="True" />
+                            <Label Grid.Row="4">Avg Molecular Weight:</Label>
+                            <TextBox Grid.Row="4" Grid.Column="1" Name="avg_molecular_weight_tb" Margin="0,0,0,10" Controls:TextBoxHelper.ClearTextButton="True" />
+                            <Label Grid.Row="5">Iupac Name:</Label>
+                            <TextBox Grid.Row="5" Grid.Column="1" Name="iupac_name_tb" Margin="0,0,0,10" Controls:TextBoxHelper.ClearTextButton="True" />
+                            <Label Grid.Row="6">Kingdom:</Label>
+                            <TextBox Grid.Row="6" Grid.Column="1" Name="kingdom_tb" Margin="0,0,0,10" Controls:TextBoxHelper.ClearTextButton="True" />
+                            <Label Grid.Row="7">Class:</Label>
+                            <TextBox Grid.Row="7" Grid.Column="1" Name="class_tb" Margin="0,0,0,10" Controls:TextBoxHelper.ClearTextButton="True" />
+                            <Label Grid.Row="8">Status:</Label>
+                            <TextBox Grid.Row="8" Grid.Column="1" Name="status_tb" Margin="0,0,0,10" Controls:TextBoxHelper.ClearTextButton="True" />
+                            <Grid Grid.Row="9">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="Auto" />
+                                    <ColumnDefinition Width="Auto" />
+                                    <ColumnDefinition Width="Auto" />
+                                    <ColumnDefinition Width="*" />
+                                </Grid.ColumnDefinitions>
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="*" />
+                                </Grid.RowDefinitions>
+                                <Button Grid.Row="0" Grid.Column="0" Content="Atualizar" Style="{StaticResource SquareButtonStyle}" HorizontalAlignment="Left" Margin="0,10,5,0" VerticalAlignment="Top" Click="Metabolite_Update" />
+                                <Button Grid.Row="0" Grid.Column="1" Content="Novo" Style="{DynamicResource AccentedSquareButtonStyle}" HorizontalAlignment="Left" Margin="0,10,5,0" VerticalAlignment="Top" Click="Metabolite_New"/>
+                                <Button Grid.Row="0" Grid.Column="2" Content="Apagar" Style="{DynamicResource SquareButtonStyle}" HorizontalAlignment="Left" Margin="0,10,5,0" VerticalAlignment="Top" Click="Metabolite_Delete"/>
+                                <Button Grid.Row="0" Grid.Column="3" Content="Limpar" Style="{DynamicResource SquareButtonStyle}" HorizontalAlignment="Left" Margin="0,10,0,0" VerticalAlignment="Top" Click="Metabolites_Clear"/>
+                                <Button Grid.Column="4" Content="Pesquisar" Style="{DynamicResource SquareButtonStyle}" HorizontalAlignment="Left" Margin="0,10,5,0" VerticalAlignment="Top" Click="Met_Search"/>
+                            </Grid>
+                            <Label Grid.Row="10" Grid.Column="0" Margin="0,12,0,0">Possible Relations:</Label>
+                            <ComboBox Name="metabolites_rel" Grid.Row="10" Grid.Column="1" HorizontalAlignment="Center" Margin="0,10,0,0" VerticalAlignment="Top" Loaded="ComboBoxMetabolite_Loaded" SelectionChanged="ComboBoxMetabolite_SelectionChanged"/>
+                            <Grid Grid.Row="11">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="Auto" />
+                                    <ColumnDefinition Width="Auto" />
+                                    <ColumnDefinition Width="*" />
+                                </Grid.ColumnDefinitions>
+                                <Button  Grid.Column="0" Content="Get Relation" Style="{DynamicResource SquareButtonStyle}" HorizontalAlignment="Center" Margin="0,10,5,0" VerticalAlignment="Top" Click="Met_GetRel"/>
+                                <Button  Grid.Column="1" Content="Normal View" Style="{DynamicResource SquareButtonStyle}" HorizontalAlignment="Center" Margin="0,10,5,0" VerticalAlignment="Top"  Click="Metabolite_reset"/>
+                            </Grid>
+                        </Grid>
+                    </ScrollViewer>
+                </Grid>
+            </TabItem>
+            <TabItem Header="PPI" Selector.Selected="PPI_Clear">
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="1*" />
+                        <ColumnDefinition Width="0.6*" />
+                    </Grid.ColumnDefinitions>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="*" />
+                    </Grid.RowDefinitions>
+                    <DataGrid Name="PPIGrid" IsReadOnly="True" SelectionChanged="PPI_SelectionChanged">
+                    </DataGrid>
+                    <ScrollViewer Grid.Column="1" VerticalScrollBarVisibility="Auto">
+                        <StackPanel>
+                            <Grid Grid.Column="1" Margin="10,0,0,0">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="Auto" />
+                                    <ColumnDefinition Width="*" />
+                                </Grid.ColumnDefinitions>
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="Auto" />
+                                    <RowDefinition Height="Auto" />
+                                    <RowDefinition Height="Auto" />
+                                    <RowDefinition Height="Auto" />
+                                    <RowDefinition Height="Auto" />
+                                    <RowDefinition Height="Auto" />
+                                    <RowDefinition Height="Auto" />
+                                    <RowDefinition Height="Auto" />
+                                    <RowDefinition Height="Auto" />
+                                    <RowDefinition Height="Auto" />
+                                    <RowDefinition Height="Auto" />
+                                    <RowDefinition Height="Auto" />
+                                    <RowDefinition Height="Auto" />
+                                    <RowDefinition Height="Auto" />
+                                    <RowDefinition Height="*" />
+                                </Grid.RowDefinitions>
+                                <Label Grid.Row="1">DB code ppi:</Label>
+                                <TextBox Grid.Column="1" Grid.Row="1" Name="db_ppi_tb" Margin="0,0,0,10"  Controls:TextBoxHelper.ClearTextButton="True"/>
+                                <Label Grid.Row="2">PPI method:</Label>
+                                <TextBox Grid.Row="2" Grid.Column="1" Name="ppi_method_tb" Margin="0,0,0,10" Controls:TextBoxHelper.ClearTextButton="True" />
+                                <Label Grid.Row="3">PPI throughput:</Label>
+                                <TextBox Grid.Row="3" Grid.Column="1" Name="ppi_throughput_tb" Margin="0,0,0,10" Controls:TextBoxHelper.ClearTextButton="True" />
+                                <Label Grid.Row="4">PPI combined:</Label>
+                                <TextBox Grid.Row="4" Grid.Column="1" Name="ppi_combined_tb" Margin="0,0,0,10" Controls:TextBoxHelper.ClearTextButton="True" />
+                                <Label Grid.Row="5">PPI text mining:</Label>
+                                <TextBox Grid.Row="5" Grid.Column="1" Name="ppi_text_mining_tb" Margin="0,0,0,10"  Controls:TextBoxHelper.ClearTextButton="True"/>
+                                <Label Grid.Row="6">PPI coexpr:</Label>
+                                <TextBox Grid.Row="6" Grid.Column="1" Name="ppi_coexpr_tb" Margin="0,0,0,10"  Controls:TextBoxHelper.ClearTextButton="True"/>
+                                <Label Grid.Row="7">PPI experimental:</Label>
+                                <TextBox Grid.Row="7" Grid.Column="1" Name="ppi_experimental_tb" Margin="0,0,0,10"  Controls:TextBoxHelper.ClearTextButton="True"/>
+                                <Label Grid.Row="8">PPI knowledge:</Label>
+                                <TextBox Grid.Row="8" Grid.Column="1" Name="ppi_knowledge_tb" Margin="0,0,0,10"  Controls:TextBoxHelper.ClearTextButton="True"/>
+                                <Label Grid.Row="9">PPI prot id1:</Label>
+                                <TextBox Grid.Row="9" Grid.Column="1" Name="ppi_prot_id1_tb" Margin="0,0,0,10"  Controls:TextBoxHelper.ClearTextButton="True"/>
+                                <Label Grid.Row="10">PPI prot id2:</Label>
+                                <TextBox Grid.Row="10" Grid.Column="1" Name="ppi_prot_id2_tb" Margin="0,0,0,10"  Controls:TextBoxHelper.ClearTextButton="True"/>
+                                <Grid Grid.Row="11">
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="Auto" />
+                                        <ColumnDefinition Width="Auto" />
+                                        <ColumnDefinition Width="Auto" />
+                                        <ColumnDefinition Width="Auto" />
+                                        <ColumnDefinition Width="*" />
+                                    </Grid.ColumnDefinitions>
+                                    <Button Grid.Column="0" Content="Atualizar" Style="{StaticResource SquareButtonStyle}" HorizontalAlignment="Left" Margin="0,10,5,0" VerticalAlignment="Top" Click="PPI_Update" />
+                                    <Button Grid.Column="1" Content="Novo" Style="{DynamicResource AccentedSquareButtonStyle}" HorizontalAlignment="Left" Margin="0,10,5,0" VerticalAlignment="Top" Click="PPI_New" />
+                                    <Button Grid.Column="2" Content="Apagar" Style="{DynamicResource SquareButtonStyle}" HorizontalAlignment="Left" Margin="0,10,5,0" VerticalAlignment="Top" Click="PPI_Delete" />
+                                    <Button Grid.Column="3" Content="Limpar" Style="{DynamicResource SquareButtonStyle}" HorizontalAlignment="Left" Margin="0,10,5,0" VerticalAlignment="Top"  Click="PPI_Clear"/>
+                                    <Button Grid.Column="4" Content="Pesquisar" Style="{DynamicResource SquareButtonStyle}" HorizontalAlignment="Left" Margin="0,10,5,0" VerticalAlignment="Top" Click="PPI_Search" />
+                                </Grid>
+                                <Label Grid.Row="12" Grid.Column="0" Margin="0,12,0,0">Possible Relations:</Label>
+                                <ComboBox Name="ppi_rel" Grid.Row="12" Grid.Column="1" HorizontalAlignment="Center" Margin="0,10,0,0" VerticalAlignment="Top" Loaded="ComboBoxPPI_Loaded" SelectionChanged="ComboBoxPPI_SelectionChanged"/>
+                                <Grid Grid.Row="13">
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="Auto" />
+                                        <ColumnDefinition Width="Auto" />
+                                        <ColumnDefinition Width="*" />
+                                    </Grid.ColumnDefinitions>
+                                    <Button  Grid.Column="0" Content="Get Relation" Style="{DynamicResource SquareButtonStyle}" HorizontalAlignment="Center" Margin="0,10,5,0" VerticalAlignment="Top" Click="PPI_GetRel" />
+                                    <Button  Grid.Column="1" Content="Normal View" Style="{DynamicResource SquareButtonStyle}" HorizontalAlignment="Center" Margin="0,10,5,0" VerticalAlignment="Top" Click="PPI_reset"/>
+                                </Grid>
+                            </Grid>
+                        </StackPanel>
+                    </ScrollViewer>
+                </Grid>
+            </TabItem>
+            <TabItem Header="PCI" Selector.Selected="PCI_Clear">
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="1*" />
+                        <ColumnDefinition Width="0.6*" />
+                    </Grid.ColumnDefinitions>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="*" />
+                    </Grid.RowDefinitions>
+                    <DataGrid Name="PCIGrid" IsReadOnly="True" SelectionChanged="PCI_SelectionChanged">
+                    </DataGrid>
+                    <ScrollViewer Grid.Column="1" VerticalScrollBarVisibility="Auto">
+                        <StackPanel>
+                            <Grid Grid.Column="1" Margin="10,0,0,0">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="Auto" />
+                                    <ColumnDefinition Width="*" />
+                                </Grid.ColumnDefinitions>
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="Auto" />
+                                    <RowDefinition Height="Auto" />
+                                    <RowDefinition Height="Auto" />
+                                    <RowDefinition Height="Auto" />
+                                    <RowDefinition Height="Auto" />
+                                    <RowDefinition Height="Auto" />
+                                    <RowDefinition Height="Auto" />
+                                    <RowDefinition Height="Auto" />
+                                    <RowDefinition Height="Auto" />
+                                    <RowDefinition Height="Auto" />
+                                    <RowDefinition Height="Auto" />
+                                    <RowDefinition Height="Auto" />
+                                    <RowDefinition Height="Auto" />
+                                    <RowDefinition Height="*" />
+                                </Grid.RowDefinitions>
+                                <Label Grid.Row="1">DB code pci:</Label>
+                                <TextBox Grid.Column="1" Grid.Row="1" Name="db_code_pci_tb" Margin="0,0,0,10"  Controls:TextBoxHelper.ClearTextButton="True"/>
+                                <Label Grid.Row="2">PCI method:</Label>
+                                <TextBox Grid.Row="2" Grid.Column="1" Name="pci_method_tb" Margin="0,0,0,10" Controls:TextBoxHelper.ClearTextButton="True" />
+                                <Label Grid.Row="3">PCI throughput:</Label>
+                                <TextBox Grid.Row="3" Grid.Column="1" Name="pci_throughput_tb" Margin="0,0,0,10" Controls:TextBoxHelper.ClearTextButton="True" />
+                                <Label Grid.Row="4">PCI combined:</Label>
+                                <TextBox Grid.Row="4" Grid.Column="1" Name="pci_combined_tb" Margin="0,0,0,10" Controls:TextBoxHelper.ClearTextButton="True" />
+                                <Label Grid.Row="5">PCI text mining:</Label>
+                                <TextBox Grid.Row="5" Grid.Column="1" Name="pci_text_mining_tb" Margin="0,0,0,10"  Controls:TextBoxHelper.ClearTextButton="True"/>
+                                <Label Grid.Row="6">PCI coexpr:</Label>
+                                <TextBox Grid.Row="6" Grid.Column="1" Name="pci_coexpr_tb" Margin="0,0,0,10"  Controls:TextBoxHelper.ClearTextButton="True"/>
+                                <Label Grid.Row="7">PCI experimental:</Label>
+                                <TextBox Grid.Row="7" Grid.Column="1" Name="pci_experimental_tb" Margin="0,0,0,10"  Controls:TextBoxHelper.ClearTextButton="True"/>
+                                <Label Grid.Row="8">PCI knowledge:</Label>
+                                <TextBox Grid.Row="8" Grid.Column="1" Name="pci_knowledge_tb" Margin="0,0,0,10"  Controls:TextBoxHelper.ClearTextButton="True"/>
+                                <Label Grid.Row="9">PCI prot id:</Label>
+                                <TextBox Grid.Row="9" Grid.Column="1" Name="pci_prot_id_tb" Margin="0,0,0,10"  Controls:TextBoxHelper.ClearTextButton="True"/>
+                                <Label Grid.Row="10">PCI metab id:</Label>
+                                <TextBox Grid.Row="10" Grid.Column="1" Name="pci_metab_id_tb" Margin="0,0,0,10"  Controls:TextBoxHelper.ClearTextButton="True"/>
+                                <Grid Grid.Row="11">
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="Auto" />
+                                        <ColumnDefinition Width="Auto" />
+                                        <ColumnDefinition Width="Auto" />
+                                        <ColumnDefinition Width="Auto" />
+                                        <ColumnDefinition Width="*" />
+                                    </Grid.ColumnDefinitions>
+                                    <Button Grid.Column="0" Content="Atualizar" Style="{StaticResource SquareButtonStyle}" HorizontalAlignment="Left" Margin="0,10,5,0" VerticalAlignment="Top" Click="PCI_Update" />
+                                    <Button Grid.Column="1" Content="Novo" Style="{DynamicResource AccentedSquareButtonStyle}" HorizontalAlignment="Left" Margin="0,10,5,0" VerticalAlignment="Top" Click="PCI_New"/>
+                                    <Button Grid.Column="2" Content="Apagar" Style="{DynamicResource SquareButtonStyle}" HorizontalAlignment="Left" Margin="0,10,5,0" VerticalAlignment="Top" Click="PCI_Delete"/>
+                                    <Button Grid.Column="3" Content="Limpar" Style="{DynamicResource SquareButtonStyle}" HorizontalAlignment="Left" Margin="0,10,5,0" VerticalAlignment="Top"  Click="PCI_Clear"/>
+                                    <Button Grid.Column="4" Content="Pesquisar" Style="{DynamicResource SquareButtonStyle}" HorizontalAlignment="Left" Margin="0,10,5,0" VerticalAlignment="Top"  Click="PCI_Search"/>
+                                </Grid>
+                                <Label Grid.Row="12" Grid.Column="0" Margin="0,12,0,0">Possible Relations:</Label>
+                                <ComboBox Name="pci_rel" Grid.Row="12" Grid.Column="1" HorizontalAlignment="Center" Margin="0,10,0,0" VerticalAlignment="Top" Loaded="ComboBoxPCI_Loaded" SelectionChanged="ComboBoxPCI_SelectionChanged"/>
+                                <Grid Grid.Row="13">
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="Auto" />
+                                        <ColumnDefinition Width="Auto" />
+                                        <ColumnDefinition Width="*" />
+                                    </Grid.ColumnDefinitions>
+                                    <Button  Grid.Column="0" Content="Get Relation" Style="{DynamicResource SquareButtonStyle}" HorizontalAlignment="Center" Margin="0,10,5,0" VerticalAlignment="Top"  Click="PCI_GetRel"/>
+                                    <Button  Grid.Column="1" Content="Normal View" Style="{DynamicResource SquareButtonStyle}" HorizontalAlignment="Center" Margin="0,10,5,0" VerticalAlignment="Top"  Click="PCI_reset"/>
+                                </Grid>
+                            </Grid>
+                        </StackPanel>
+                    </ScrollViewer>
+                </Grid>
+            </TabItem>
+            <TabItem Header="DB Origin" Selector.Selected="Dbo_Clear">
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="1*" />
+                        <ColumnDefinition Width="0.6*" />
+                    </Grid.ColumnDefinitions>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="*" />
+                    </Grid.RowDefinitions>
+                    <DataGrid Name="DBoGrid" IsReadOnly="True" SelectionChanged="Dbo_SelectionChanged">
+                    </DataGrid>
+                    <ScrollViewer Grid.Column="1" VerticalScrollBarVisibility="Auto">
+                        <StackPanel>
+                            <Grid Grid.Column="1" Margin="10,0,0,0">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="Auto" />
+                                    <ColumnDefinition Width="*" />
+                                </Grid.ColumnDefinitions>
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="Auto" />
+                                    <RowDefinition Height="Auto" />
+                                    <RowDefinition Height="Auto" />
+                                    <RowDefinition Height="Auto" />
+                                    <RowDefinition Height="Auto" />
+                                    <RowDefinition Height="Auto" />
+                                    <RowDefinition Height="Auto" />
+                                    <RowDefinition Height="*" />
+                                </Grid.RowDefinitions>
+                                <Label Grid.Row="1">db_sequential_id:</Label>
+                                <TextBox Grid.Column="1" Grid.Row="1" Name="db_sequential_id_tb" Margin="0,0,0,10"  Controls:TextBoxHelper.ClearTextButton="True"/>
+                                <Label Grid.Row="2">name_db_origin:</Label>
+                                <TextBox Grid.Row="2" Grid.Column="1" Name="name_db_origin_tb" Margin="0,0,0,10" Controls:TextBoxHelper.ClearTextButton="True" />
+                                <Label Grid.Row="3">url_proj:</Label>
+                                <TextBox Grid.Row="3" Grid.Column="1" Name="url_proj_tb" Margin="0,0,0,10" Controls:TextBoxHelper.ClearTextButton="True" />
+                                <Label Grid.Row="4">info_type:</Label>
+                                <TextBox Grid.Row="4" Grid.Column="1" Name="info_type_tb" Margin="0,0,0,10" Controls:TextBoxHelper.ClearTextButton="True" />
+                                <Grid Grid.Row="5">
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="Auto" />
+                                        <ColumnDefinition Width="Auto" />
+                                        <ColumnDefinition Width="Auto" />
+                                        <ColumnDefinition Width="Auto" />
+                                        <ColumnDefinition Width="*" />
+                                    </Grid.ColumnDefinitions>
+                                    <Button Grid.Column="0" Content="Atualizar" Style="{StaticResource SquareButtonStyle}" HorizontalAlignment="Left" Margin="0,10,5,0" VerticalAlignment="Top" Click="Dbo_Update" />
+                                    <Button Grid.Column="1" Content="Novo" Style="{DynamicResource AccentedSquareButtonStyle}" HorizontalAlignment="Left" Margin="0,10,5,0" VerticalAlignment="Top" Click="Dbo_New"/>
+                                    <Button Grid.Column="2" Content="Apagar" Style="{DynamicResource SquareButtonStyle}" HorizontalAlignment="Left" Margin="0,10,5,0" VerticalAlignment="Top" Click="Dbo_Delete"/>
+                                    <Button Grid.Column="3" Content="Limpar" Style="{DynamicResource SquareButtonStyle}" HorizontalAlignment="Left" Margin="0,10,5,0" VerticalAlignment="Top"  Click="Dbo_Clear"/>
+                                    <Button Grid.Column="4" Content="Pesquisar" Style="{DynamicResource SquareButtonStyle}" HorizontalAlignment="Left" Margin="0,10,5,0" VerticalAlignment="Top"  Click="Dbo_Search"/>
+                                </Grid>
+                                <Label Grid.Row="6" Grid.Column="0" Margin="0,12,0,0">Possible Relations:</Label>
+                                <ComboBox Name="dbo_rel" Grid.Row="6" Grid.Column="1" HorizontalAlignment="Center" Margin="0,10,0,0" VerticalAlignment="Top" Loaded="ComboBoxDBO_Loaded" SelectionChanged="ComboBoxDBO_SelectionChanged"/>
+                                <Grid Grid.Row="7">
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="Auto" />
+                                        <ColumnDefinition Width="Auto" />
+                                        <ColumnDefinition Width="*" />
+                                    </Grid.ColumnDefinitions>
+                                    <Button  Grid.Column="0" Content="Get Relation" Style="{DynamicResource SquareButtonStyle}" HorizontalAlignment="Center" Margin="0,10,5,0" VerticalAlignment="Top"  Click="DBo_GetRel"/>
+                                    <Button  Grid.Column="1" Content="Normal View" Style="{DynamicResource SquareButtonStyle}" HorizontalAlignment="Center" Margin="0,10,5,0" VerticalAlignment="Top"  Click="DBo_reset"/>
+                                </Grid>
+                            </Grid>
+                        </StackPanel>
+                    </ScrollViewer>
+                </Grid>
+            </TabItem>
+        </TabControl>
+    </Grid>
+</Page>
